@@ -1,3 +1,5 @@
+  //for demo 1.1
+
     var pictureSource;   // picture source
     var destinationType; // sets the format of returned value 
     var time = 0; //game timer
