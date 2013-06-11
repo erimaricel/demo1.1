@@ -106,6 +106,7 @@
     // 
     function onFail(message) {
       alert('Failed because: ' + message);
+      window.location = "index.html";
     }
 
 
@@ -131,23 +132,32 @@
       event.preventDefault();
     }
 
-    function checkwin(block)
+    function checkwin()
     {
+      var z=0;
 
-      if(block.querySelector("#img"+block.id.substring(5)))
+      $('.place').each(function(i, obj) 
+          {
+              if(this.querySelector("#img"+this.id.substring(5)))
               {
-                if(jQuery.inArray(block.id.substring(5), arr2) < 0)
+                if(jQuery.inArray(this.id.substring(5), arr2) < 0)
                 {
-                          alert("scored!");
-                          arr2.push(block.id.substring(5));
+                          arr2.push(this.id.substring(5));
                           score = score + (100 + (500/time)); 
                           document.getElementById('points').innerText = parseInt(score);
                 }
+                z++;
               }
+              else
+              {
+                z=0;
+              }
+          });
 
-        if(arr2.length == 25)
+        if(z == 25)
         {
           clearInterval(myint);
+          clearInterval(checkwintimer);
           displayWin();
           return true;
         }
@@ -224,7 +234,6 @@
               {
                 if(jQuery.inArray(this.id.substring(5), arr2) < 0)
                 {
-                          alert("scored!");
                           arr2.push(this.id.substring(5));
                           score = score + (100 + (500/time)); 
                           document.getElementById('points').innerText = parseInt(score);
@@ -255,15 +264,17 @@
           }
       }
       myint = window.setInterval(timer, 1000);
-
+      checkwintimer = window.setInterval(checkwin, 500);
     }
 
     function timer()
     {
       document.getElementById('play-timer').innerText = time++;
+      checkwin();
       if(time == 500)
       {
         clearInterval(myint);
+        clearInterval(checkwintimer);
         alert("Game Over");
       }
     }

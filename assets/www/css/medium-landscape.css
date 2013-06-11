@@ -129,8 +129,8 @@
 	margin: 1px auto 0 auto;
 }
 .puzzhard{
-	height: 25px;
-	width: 25px;
+	height: 40px;
+	width: 40px;
 	overflow: hidden;
 }
 #playboard-hard{
@@ -138,6 +138,12 @@
 	height: 400px;
 	margin: 0 auto auto auto;
 	background: url("../images/medium/hard-board.png") no-repeat center center;
+}
+#playboard-hard #container{
+	width: 208px;
+	height: 208px;
+	margin: 0 auto 0 auto;
+	padding-top: 85px;
 }
 #play-scoreboard {
 	text-align: center;

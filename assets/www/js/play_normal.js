@@ -1,5 +1,3 @@
-  //for demo 1.1
-
     var pictureSource;   // picture source
     var destinationType; // sets the format of returned value 
     var time = 0; //game timer
@@ -108,6 +106,7 @@
     // 
     function onFail(message) {
       alert('Failed because: ' + message);
+      window.location = "index.html";
     }
 
 
@@ -134,11 +133,32 @@
     }
 
     function checkwin()
-    {
+    { 
 
-        if(arr2.length == 16)
+      var z=0;
+
+      $('.place').each(function(i, obj) 
+          {
+               if(this.querySelector("#img"+this.id.substring(5)))
+              {
+                if(jQuery.inArray(this.id.substring(5), arr2) < 0)
+                {
+                          arr2.push(this.id.substring(5));
+                          score = score + (100 + (500/time)); 
+                          document.getElementById('points').innerText = parseInt(score);
+                }
+              z++;
+              }
+              else
+              {
+                z=0;
+              }
+          });
+
+        if(z == 16)
         {
           clearInterval(myint);
+          clearInterval(checkwintimer);
           displayWin();
           return true;
         }
@@ -198,27 +218,41 @@
 
        $('.puzz').draggable({helper: 'clone', revert: true});
 
-      var stockArea = $('.place, .playblock-normal').droppable({
-        drop: function (event, ui) {
+      $('.place').droppable({
+        drop: function (event, ui) {}
+      });     
+
+      $('.place').on("drop",function(event, ui) {
             if(this.innerHTML.length < 5)
             {
-            ui.helper.fadeOut();
-            var target = $('.place');
             $(this).empty();
             $(ui.draggable).appendTo(this);
+            ui.helper.fadeOut();  
+            }
+
             if(this.querySelector("#img"+this.id.substring(5)))
               {
                 if(jQuery.inArray(this.id.substring(5), arr2) < 0)
                 {
                           arr2.push(this.id.substring(5));
-                         score = score + (100 + (500/time)); 
+                          score = score + (100 + (500/time)); 
                           document.getElementById('points').innerText = parseInt(score);
                 }
               }
-            checkwin();
+            
+              checkwin();
+          });
+
+      $('.playblock-normal').droppable({
+        drop: function (event, ui) {
+            if(this.innerHTML.length < 5)
+            {
+            $(this).empty();
+            $(ui.draggable).appendTo(this);
+            ui.helper.fadeOut();
             }
         }
-      });     
+      });    
       
       for(y=1; y<=4; y++)
       {
@@ -230,6 +264,7 @@
         }
       }
       myint = window.setInterval(timer, 1000);
+      checkwintimer = window.setInterval(checkwin, 500);
 
     }
 
@@ -239,6 +274,7 @@
       if(time == 500)
       {
         clearInterval(myint);
+        clearInterval(checkwintimer);
         alert("Game Over");
       }
     }
