@@ -21,7 +21,7 @@
 	width: 80%;
 }
 #logo {
-	margin: 5px auto 30% auto;
+	margin: 50px auto 30% auto;
 	width: 406px;
 	height: 190px;
 	background: url("../images/medium/logo.png") no-repeat;
@@ -74,6 +74,18 @@
 #btn-back:hover{
 	background: url("../images/medium/buttons/back-hover.png") no-repeat center center;
 }
+#btn-mainmenu{
+	background: url("../images/medium/buttons/mainmenu.png") no-repeat center center;
+}
+#btn-mainmenu:hover{
+	background: url("../images/medium/buttons/mainmenu-hover.png") no-repeat center center;
+}
+#btn-playagain{
+	background: url("../images/medium/buttons/playagain.png") no-repeat center center;
+}
+#btn-playagain:hover{
+	background: url("../images/medium/buttons/playagain-hover.png") no-repeat center center;
+}
 #main-menu{
 	width: 60px;
 	height: 60px;
@@ -102,6 +114,15 @@
 	height: 50px;
 	width: 50px;
 }
+
+#containerHard{
+	height: 220px;
+	width: 220px;
+	margin: 0 auto 0 auto;
+	padding-top: 15px;
+	padding-left: 13px;
+}
+
 #score-wrapper{
 	position: absolute;
 	left: 35%;
@@ -121,6 +142,27 @@
 	color: #fff;
 	text-shadow: 5px 2px 6px rgb(22, 112, 9);
 }
+
+#score-wrapperh{
+	position: absolute;
+	left: 38%;
+	top: -60%;
+	width: 280px;
+	height: 157px;
+	display: none;
+	background: url("../images/medium/score.png") no-repeat center center;
+}
+#score-wrapperh #score-counth{
+	position: relative;
+	top: 60px;
+	left: 30px;
+	font-family: 'Calibri',Arial,sans-serif;
+	font-size: 36px;
+	font-weight: bold;
+	color: #fff;
+	text-shadow: 5px 2px 6px rgb(22, 112, 9);
+}
+
 .puzz{
 	height: 50px;
 	width: 50px;
@@ -147,7 +189,7 @@
 #play-scoreboard {
 	text-align: center;
 }
-#play-timer {
+#play-timer, #play-timerh {
 	text-align: center;
 }
 #play-scoreboard #score{
@@ -159,7 +201,7 @@
 	line-height: 24px;
 
 }
-#play-scoreboard #points{
+#play-scoreboard #points, #pointsh{
 	font-family: 'Calibri',Arial,sans-serif;
 	font-size: 28px;
 	font-weight: bold;
@@ -167,7 +209,7 @@
 	text-shadow: 5px 2px 6px rgb(236, 15, 6);
 	line-height: 24px;
 }
-#play-timer{
+#play-timer, #play-timerh{
 	font-family: 'Calibri',Arial,sans-serif;
 	font-size: 72px;
 	font-weight: bold;
@@ -192,11 +234,26 @@
 	height: 232px;
 }
 #playblock-holder-hard .playblock-hard{
-	width: 45px;
-	height: 45px;
+	width: 40px;
+	height: 40px;
 	border: 3px dotted rgb(182, 67, 13);
 	float: left;
 	margin: 4px 5px 4px 5px;
+}
+#end-menu{
+	position: absolute;
+	top: 160px;
+	left: -40px;
+}
+#end-menu ul{
+	padding: 0;
+}
+#end-menu ul li{
+	list-style: none;
+	width: 313px;
+	height: 64px;
+	margin: 3% auto 3% auto;
+	background-size: 313px 64px;
 }
 /* Highscore Page*/	
 #header-title {
@@ -217,10 +274,10 @@
 	width: 30%;
 	text-align: left; 
 }
-#inner-content ul li{
+#inner-content table tr td{
 	list-style: none;
 	font-family: 'Calibri',Arial,sans-serif;
-	font-size: 28px;
+	font-size: 27px;
 	font-weight: bold;
 	color: #fff;
 	text-shadow: 5px 2px 6px rgb(236, 15, 6);

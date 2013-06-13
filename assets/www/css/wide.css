@@ -103,6 +103,15 @@
 	height: 50px;
 	width: 50px;
 }
+
+#containerHard{
+	height: 220px;
+	width: 220px;
+	margin: 0 auto 0 auto;
+	padding-top: 15px;
+	padding-left: 13px;
+}
+
 #score-wrapper{
 	position: absolute;
 	left: 38%;
@@ -113,6 +122,25 @@
 	background: url("../images/medium/score.png") no-repeat center center;
 }
 #score-wrapper #score-count{
+	position: relative;
+	top: 60px;
+	left: 30px;
+	font-family: 'Calibri',Arial,sans-serif;
+	font-size: 36px;
+	font-weight: bold;
+	color: #fff;
+	text-shadow: 5px 2px 6px rgb(22, 112, 9);
+}
+#score-wrapperh{
+	position: absolute;
+	left: 38%;
+	top: -60%;
+	width: 280px;
+	height: 157px;
+	display: none;
+	background: url("../images/medium/score.png") no-repeat center center;
+}
+#score-wrapperh #score-counth{
 	position: relative;
 	top: 60px;
 	left: 30px;
@@ -148,7 +176,7 @@
 #play-scoreboard {
 	text-align: center;
 }
-#play-timer {
+#play-timer, #play-timerh{
 	text-align: center;
 }
 #play-scoreboard #score{
@@ -160,7 +188,7 @@
 	line-height: 24px;
 
 }
-#play-scoreboard #points{
+#play-scoreboard #points, #pointsh{
 	font-family: 'Calibri',Arial,sans-serif;
 	font-size: 28px;
 	font-weight: bold;
@@ -168,7 +196,7 @@
 	text-shadow: 5px 2px 6px rgb(236, 15, 6);
 	line-height: 24px;
 }
-#play-timer{
+#play-timer, #play-timerh{
 	font-family: 'Calibri',Arial,sans-serif;
 	font-size: 72px;
 	font-weight: bold;
@@ -219,10 +247,10 @@
 	width: 30%;
 	text-align: left; 
 }
-#inner-content ul li{
+#inner-content table tr td{
 	list-style: none;
 	font-family: 'Calibri',Arial,sans-serif;
-	font-size: 28px;
+	font-size: 27px;
 	font-weight: bold;
 	color: #fff;
 	text-shadow: 5px 2px 6px rgb(236, 15, 6);

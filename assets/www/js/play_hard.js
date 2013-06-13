@@ -1,79 +1,31 @@
     var pictureSource;   // picture source
     var destinationType; // sets the format of returned value 
-    var time = 0; //game timer
-    var score = 0;
-    var arr2 = [];
-    var myint;
+    var timeHard = 0; //game timer
+    var scoreHard = 0;
+    var arr2Hard = [];
+    var myintHard;
+    var checkwintimerHard;
+    var imageData;
     // Wait for Cordova to connect with the device
     //
   
   
-    function init(){
-      document.addEventListener("deviceready",onDeviceReady,false);
+    function initHard(){
+      document.addEventListener("deviceready",onDeviceReadyHard,false);
     }
   
     // Cordova is ready to be used!
     //
-    function onDeviceReady() {
+    function onDeviceReadyHard() {
       // navigator.notification.alert("Application Started");
         pictureSource=navigator.camera.PictureSourceType;
         destinationType=navigator.camera.DestinationType;
-        capturePhoto();
+        capturePhotoHard();
     }
 
-    // Called when a photo is successfully retrieved
-    //
-    function onPhotoDataSuccess(imageData) {
-      // Uncomment to view the base64 encoded image data
-      //console.log(imageData);
-
-      // Get image handle
-      //
-      var smallImage = document.getElementById('smallImage');
-      //var playboard = $('.playboard').val();
-
-      //
-     // playboard.width(100);
-      //playboard.height(100);
-      smallImage.style.display = 'block';
-
-      // Show the captured photo
-      // The inline CSS rules are used to resize the image
-      //
-      smallImage.src = /*"data:image/jpeg;base64," +*/ imageData;
-      //alert(imageData);
-
-    }
-
-    // Called when a photo is successfully retrieved
-    //
-    function onPhotoURISuccess(imageURI) {
-      // Uncomment to view the image file URI 
-      console.log(imageURI);
-
-      // Get image handle
-      //
-      var largeImage = document.getElementById('playboard-hard');
-
-      // Unhide image elements
-      //
-      largeImage.style.display = 'block';
-
-
-      // Show the captured photo
-      // The inline CSS rules are used to resize the image
-      //
-      largeImage.src = imageURI;
-      largeImage.width(200); // Units are assumed to be pixels
-      largeImage.height(200);
-      
-    }
-
-    // A button will call this function
-    //
-    function capturePhoto() {
+    function capturePhotoHard() {
     // Take picture using device camera and retrieve image as base64-encoded string
-            navigator.camera.getPicture(start, onFail,{
+            navigator.camera.getPicture(startHard, onFail,{
             quality : 75, 
             destinationType : Camera.DestinationType.FILE_URI, 
             sourceType : Camera.PictureSourceType.CAMERA, 
@@ -85,13 +37,6 @@
             saveToPhotoAlbum: true });         
    }
 
-    // A button will call this function
-    //
-    function capturePhotoEdit() {
-      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string  
-      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
-        destinationType: destinationType.DATA_URL });
-    }
 
     // A button will call this function
     //
@@ -132,21 +77,22 @@
       event.preventDefault();
     }
 
-    function checkwin()
-    {
+    function checkwinHard()
+    { 
+
       var z=0;
 
-      $('.place').each(function(i, obj) 
+      $('.placeh').each(function(i, obj) 
           {
-              if(this.querySelector("#img"+this.id.substring(5)))
+               if(this.querySelector("#img"+this.id.substring(6)))
               {
-                if(jQuery.inArray(this.id.substring(5), arr2) < 0)
+                if(jQuery.inArray(this.id.substring(6), arr2Hard) < 0)
                 {
-                          arr2.push(this.id.substring(5));
-                          score = score + (100 + (500/time)); 
-                          document.getElementById('points').innerText = parseInt(score);
+                          arr2Hard.push(this.id.substring(6));
+                          scoreHard = scoreHard + (100 + (500/timeHard)); 
+                          document.getElementById('pointsh').innerText = parseInt(scoreHard);
                 }
-                z++;
+              z++;
               }
               else
               {
@@ -156,9 +102,10 @@
 
         if(z == 25)
         {
-          clearInterval(myint);
-          clearInterval(checkwintimer);
-          displayWin();
+          clearInterval(myintHard);
+          clearInterval(checkwintimerHard);
+          moveFileHard();
+          displayWinHard();
           return true;
         }
         else
@@ -167,7 +114,7 @@
         }
     }
 
-    function createRand()
+    function createRandHard()
     {
       var arr = [];
       for(var x=0;x<=24;x++)
@@ -187,60 +134,64 @@
     }
 
 
-    function start(imageData) {
-
+    function startHard(imageURI) {
+      imageData = imageURI;
       touchinit();
+      resetWinHard();
+      $('#container').empty();
+      clearInterval(myintHard);
+      clearInterval(checkwintimerHard);
+      timeHard = 0;
+      scoreHard = 0;
+      document.getElementById('points').innerText = 0;
+      document.getElementById('play-timerh').innerText = 0;
+      arr2Hard = [];
       
-      var i = 1;
-      var z = 1
-      var x = 0;
       var y = 0;
-      var array = createRand();
+      var array = createRandHard();
 
       for(z=1;z<=25;z++)
       {
-        var num = Math.floor(Math.random() * array.length);
-        var roll = array.splice(num, 1);
-        m = roll;
-        $("#playblock"+z).append("<div id='puzz"+z+"' class='puzzhard'></div>");
-        $("#puzz"+z).append("<img class='img' id='img"+m+"' draggable='false'  style='overflow: hidden;' src='"+imageData+"' width='200px' height='200px' alt='Clipped image'/>");
+          var num = Math.floor(Math.random() * array.length);
+          var roll = array.splice(num, 1);
+          m = roll;
+          $("#playblockh"+z).append("<div id='puzzhard"+z+"' class='puzzhard'></div>");
+          $("#puzzhard"+z).append("<img class='img' id='img"+m+"' draggable='false'  style='overflow: hidden;' src='"+imageData+"' width='200px' height='200px'/>");
       }
 
 
       for(z=1;z<=25;z++)
       {
-        $("#container").append("<div id='place"+z+"' class='place' style='float:left; border: 1px dotted black; height:40px; width: 40px;'></div>");
-        
+        $("#containerHard").append("<div id='placeh"+z+"' class='placeh' style='float:left; border: 1px dotted black; height:40px; width: 40px;'></div>");
+          
       }
 
-      //Make puzzles draggable
+
+
       $('.puzzhard').draggable({helper: 'clone', revert: true});
 
-
-      $('.place').droppable({
+      $('.placeh').droppable({
         drop: function (event, ui) {}
       });     
 
-      $('.place').on("drop",function(event, ui) {
-
+      $('.placeh').on("drop",function(event, ui) {
             if(this.innerHTML.length < 5)
             {
             $(this).empty();
             $(ui.draggable).appendTo(this);
             ui.helper.fadeOut();  
             }
-
             if(this.querySelector("#img"+this.id.substring(5)))
               {
-                if(jQuery.inArray(this.id.substring(5), arr2) < 0)
+                if(jQuery.inArray(this.id.substring(6), arr2Hard) < 0)
                 {
-                          arr2.push(this.id.substring(5));
-                          score = score + (100 + (500/time)); 
-                          document.getElementById('points').innerText = parseInt(score);
+                          arr2Hard.push(this.id.substring(6));
+                          scoreHard = scoreHard + (100 + (500/timeHard)); 
+                          document.getElementById('pointsh').innerText = parseInt(scoreHard);
                 }
               }
             
-              checkwin(this);
+              checkwinHard();
           });
 
       $('.playblock-hard').droppable({
@@ -248,61 +199,160 @@
             if(this.innerHTML.length < 5)
             {
             $(this).empty();
-            ui.helper.fadeOut();
             $(ui.draggable).appendTo(this);
+            ui.helper.fadeOut();
             }
         }
-      });    
-      
-      for(y=1; y<=5; y++)
+      });  
+
+      var i = 1;
+      for(var y=1; y<=5; y++)
       {
-       for(x=1; x<=5; x++)
-          {     
-                document.getElementById('img'+i).style.marginLeft = -(x-1)*40+"px"; 
-                document.getElementById('img'+i).style.marginTop = -(y-1)*40+"px"; 
-                i++;
-          }
+        for(var x=1; x<=5; x++)
+        {     
+          document.getElementById('img'+i).style.marginLeft = -(x-1)*40+"px"; 
+          document.getElementById('img'+i).style.marginTop = -(y-1)*40+"px"; 
+          i++;
+        }
       }
-      myint = window.setInterval(timer, 1000);
-      checkwintimer = window.setInterval(checkwin, 500);
+
+      myintHard = window.setInterval(timerHard, 1000);
+      checkwintimerHard = window.setInterval(checkwinHard, 100);
+
     }
 
-    function timer()
+    function timerHard()
     {
-      document.getElementById('play-timer').innerText = time++;
-      checkwin();
-      if(time == 500)
+      document.getElementById('play-timerh').innerText = timeHard++;
+      if(timeHard == 500)
       {
-        clearInterval(myint);
-        clearInterval(checkwintimer);
+        clearInterval(myintHard);
+        clearInterval(checkwintimerHard);
         alert("Game Over");
+        window.location = "index.html";
       }
     }
 
 // Show end game score 
 //
 //
-function displayWin() 
+function displayWinHard() 
 {
   // unhide score block
   //
-  $('#score-wrapper').css('display','block');
+  $('#score-wrapperh').css('display','block');
   // animate score dialog
   //
-  $('#score-wrapper').animate({
+  $('#score-wrapperh').animate({
     top: 100, 
     easing: "easein",
   }, 500, function() {
     // Animation complete.
-    $({countNum: 1}).animate({countNum: score}, {
+    $({countNum: 1}).animate({countNum: scoreHard+1}, {
       duration: 1000,
       step: function() {
         // What todo on every count
-        $('#score-wrapper span').text(Math.floor(this.countNum));
+        $('#score-wrapperh span').text(Math.floor(this.countNum));
       },
       complete: function() {
         console.log('finished');
       }
     });
+  });
+  uploadScores(scoreNormal);
+}
+
+
+// Show end game score 
+//
+//
+function resetWinHard() 
+{
+  // animate score dialog
+  //
+  $('#score-wrapperh').animate({
+    top: 0, 
+    easing: "easein",
+  }, 500);
+  // unhide score block
+  //
+  $('#score-wrapperh').css('display','none');
+}
+
+function moveFileHard()
+{
+   window.resolveLocalFileSystemURI(imageData, moveOnSuccessHard, moveOnErrorHard);
+}
+
+function moveOnSuccessHard(entry)
+{
+  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+    function(fileSys) 
+    {
+      fileSys.root.getDirectory("PuzzlePic", {create:true, exclusive: false},
+        function(directory) 
+        {
+          entry.moveTo(directory, null, moveFileSuccessHard, moveOnErrorHard);
+        }, moveOnErrorHard);
+    }, moveOnErrorHard);
+}
+
+function moveOnErrorHard(error)
+{
+  console.log("Error: "+error.code); 
+}
+
+function moveFileSuccessHard(entry)
+{
+  console.log("New Path: " + entry.fullPath);
+}
+
+
+
+
+
+
+
+// Upload Score
+
+var uploadScoreURL = "http://puzzlepic.cso.ph/rest/apis/pzlpc-apis/uploadScore";
+
+ function uploadScores(score){ 
+  var username = prompt("Enter name:");
+  var finalScore = score.toString()+"";
+  if(username!=null){
+	 $.ajax({
+		url: uploadScoreURL,
+		type: 'POST',
+		dataType: 'json',
+		data: 'userName='+username+'&gameScore='+finalScore,
+		success: function (data) {
+		  getHighScores();
+		}
+	});
+  }
+ }
+ 
+var records = new Array();
+var getHighScoresURL = "http://puzzlepic.cso.ph/rest/apis/pzlpc-apis/getHighScores";
+function getHighScores(){ 
+  $.ajax({ 
+	type: "GET",
+	  dataType: "json",
+	 url: getHighScoresURL,
+	  success: function(data) {
+			$.each(data, function(i, item) {
+				records[i]=new Array();
+				records[i][0]=item.recordID;
+				records[i][1]=item.userName;
+				records[i][2]=item.gameScore;
+			});            	   
+			var list = "<table align='center' width = '80%'>";
+			for(i=0; i<records.length; i++){
+			list +="<tr><td align='left'><ul><li>"+(i+1)+".</li></ul></td><td><ul><li>"+records[i][1]+"</li></ul></td><td><ul><li>"+records[i][2]+"pts</li></ul></td>"+"</tr>";
+			}
+			list +="</table>";
+			document.getElementById("inner-content").innerHTML=list;
+		}
   });
 }

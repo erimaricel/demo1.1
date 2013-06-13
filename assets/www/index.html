@@ -3,26 +3,25 @@
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
-    <link rel="stylesheet" rel="stylesheet" type="text/css" href="css/jquery.mobile-1.1.0-rc.1.min.css" />
+    <<link rel="stylesheet" rel="stylesheet" type="text/css" href="css/jquery.mobile-1.1.0-rc.1.min.css" />
     <link rel="stylesheet" type="text/css" href="css/main.css" />
     <link id="size-stylesheet" rel="stylesheet" type="text/css" href="css/narrow.css" />
-    <script type="text/javascript" charset="utf-8" src="js/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/jquery-1.8.2.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.3.1.js"></script>
-    <script type="text/javascript" charset="utf-8" src="phonegap.0.9.4.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script> 
+	<script type="text/javascript" charset="utf-8" src="js/play_normal.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/play_hard.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/phonegap.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/layout.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/splash.js"></script>
-
-    <!--<script src="js/cordova-2.7.0.js"></script>-->
+    <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
+    <!--<script src="cordova-2.7.0.js"></script>-->
 <title>PuzzlePic</title>
 </head>
-<body onload="">
+<body>
+
         <!-- Main Menu -->
         <div data-role="page" id="mainmenu" class="wrapper">
-        	<!--
-            <div id="splashscreen">
-                <img id="sprlogo" src="images/sprlogo.png" width="250px">
-            </div>
-			-->
             <div id="logo"></div>
             <div id="buttonlist" data-role="controlgroup" data-type="horizontal">
                 <ul>
@@ -33,7 +32,7 @@
                         <a href="#gallery" data-transition="slide" ><div class="generic_linker"></div></a>
                     </li>
                     <li id="btn-highscores" class="button">
-                        <a href="#highscore" data-transition="slide" ><div class="generic_linker"></div></a>
+                        <a href="#highscore" data-transition="slide"><div class="generic_linker" onclick="getHighScores()"></div></a>
                     </li>
                 </ul>
             </div>
@@ -45,10 +44,10 @@
             <div id="buttonlist" data-role="controlgroup" data-type="horizontal">
                 <ul>
                     <li id="btn-normal" class="button"> 
-                        <a href="play_normal.html" rel="external"><div class="generic_linker"></div></a>
+                        <a href="#playnormal"  data-transition="slide"><div class="generic_linker"></div></a>
                     </li>
                     <li id="btn-hard" class="button"> 
-                        <a href="play_hard.html" rel="external"><div class="generic_linker"></div></a>
+                        <a href="#playhard" data-transition="slide"><div class="generic_linker"></div></a>
                     </li>
                     <li id="btn-back" class="button">
                         <a href="#mainmenu" data-transition="slide" ><div class="generic_linker"></div></a>
@@ -56,6 +55,130 @@
                 </ul>
             </div>
         </div><!--End Wrapper-->
+
+        <!-- Play Normal -->
+        <div data-role="page" id="playnormal" class="wrapper" reloadPage='true'>
+                <script>  
+                $('#playnormal').live('pageshow',function(event, ui){
+                  $('#container').empty();
+                  initNormal();
+                });
+            </script>
+			<div id="score-wrapper">
+			    <span id="score-count">0</span>
+			    <div id="end-menu">
+			        <ul>
+			            <li id="btn-playagain" class="button"> 
+			                <a href="#playnormal"  data-transition="slide"><div class="generic_linker"></div></a>
+			            </li>
+			            <li id="btn-mainmenu" class="button"> 
+			                <a href="#mainmenu"  data-transition="slide"><div class="generic_linker"></div></a>
+			            </li>
+			        </ul>
+			    </div>
+			</div>
+          <a href="#mainmenu" data-transition="slide">
+                <div id="main-menu">
+                    <img src="images/main-menu.png">
+                </div>
+            </a>
+            <div id="play-status">
+                <div id="play-scoreboard">
+                    <span id="score">Score:</span>
+                    <span id="points">0</span>
+                </div>
+                <div id="play-timer">0</div>
+            </div>
+                <div id="playboard-normal"><div id='container' ></div></div>
+                <div id="playblock-holder">
+	                <div id="playblock1" class="playblock-normal"></div>
+	                <div id="playblock2" class="playblock-normal"></div>
+	                <div id="playblock3" class="playblock-normal"></div>
+	                <div id="playblock4" class="playblock-normal"></div>
+	                <div id="playblock5" class="playblock-normal"></div>
+	                <div id="playblock6" class="playblock-normal"></div>
+	                <div id="playblock7" class="playblock-normal"></div>
+	                <div id="playblock8" class="playblock-normal"></div>
+	                <div id="playblock9" class="playblock-normal"></div>
+	                <div id="playblock10" class="playblock-normal"></div>
+	                <div id="playblock11" class="playblock-normal"></div>
+	                <div id="playblock12" class="playblock-normal"></div>
+	                <div id="playblock13" class="playblock-normal"></div>
+	                <div id="playblock14" class="playblock-normal"></div>
+	                <div id="playblock15" class="playblock-normal"></div>
+	                <div id="playblock16" class="playblock-normal"></div>
+	            </div>        
+        </div><!--End Wrapper-->
+        
+
+        <!-- Play Hard -->
+        <div data-role="page" id="playhard" class="wrapper" reloadPage='true'>
+                <script>  
+                $('#playhard').live('pageshow',function(event, ui){
+                  $('#containerHard').empty();
+                  initHard();
+                });
+            </script>
+            <div id="score-wrapperh">
+                <span id="score-counth">0</span>
+                <div id="end-menu">
+                    <ul>
+                        <li id="btn-playagain" class="button"> 
+                            <a href="#playhard"  data-role="button"><div class="generic_linker"></div></a>
+                        </li>
+                        <li id="btn-mainmenu" class="button"> 
+                            <a href="#mainmenu"   data-role="button"><div class="generic_linker"></div></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+          <a href="#mainmenu" data-transition="slide">
+                <div id="main-menu">
+                    <img src="images/main-menu.png">
+                </div>
+            </a>
+            <div id="play-status">
+                <div id="play-scoreboard">
+                    <span id="score">Score:</span>
+                    <span id="pointsh">0</span>
+                </div>
+                <div id="play-timerh">0</div>
+            </div>
+                <div id="playboard-hard"><div id='containerHard' ></div></div>
+                <div id="playblock-holder-hard">
+                <!-- Group 1 -->
+                <div id="playblockh1" class="playblock-hard"></div>
+                <div id="playblockh2" class="playblock-hard"></div>
+                <div id="playblockh3" class="playblock-hard"></div>
+                <div id="playblockh4" class="playblock-hard"></div>
+                <div id="playblockh5" class="playblock-hard"></div>
+                <!-- Group 2 -->
+                <div id="playblockh6" class="playblock-hard"></div>
+                <div id="playblockh7" class="playblock-hard"></div>
+                <div id="playblockh8" class="playblock-hard"></div>
+                <div id="playblockh9" class="playblock-hard"></div>
+                <div id="playblockh10" class="playblock-hard"></div>
+                <!-- Group 3 -->
+                <div id="playblockh11" class="playblock-hard"></div>
+                <div id="playblockh12" class="playblock-hard"></div>
+                <div id="playblockh13" class="playblock-hard"></div>
+                <div id="playblockh14" class="playblock-hard"></div>
+                <div id="playblockh15" class="playblock-hard"></div>
+                <!-- Group 4 -->
+                <div id="playblockh16" class="playblock-hard"></div>
+                <div id="playblockh17" class="playblock-hard"></div>
+                <div id="playblockh18" class="playblock-hard"></div>
+                <div id="playblockh19" class="playblock-hard"></div>
+                <div id="playblockh20" class="playblock-hard"></div>
+                <!-- Group 5 -->
+                <div id="playblockh21" class="playblock-hard"></div>
+                <div id="playblockh22" class="playblock-hard"></div>
+                <div id="playblockh23" class="playblock-hard"></div>
+                <div id="playblockh24" class="playblock-hard"></div>
+                <div id="playblockh25" class="playblock-hard"></div>
+            </div>       
+        </div><!--End Wrapper-->
+
 
         <!-- Gallery -->
         <div data-role="page" id="gallery" class="wrapper">
@@ -116,15 +239,11 @@
                             <span id="header">High Scores:</span>
                         </div>
                         <div id="inner-content">
-                            <ul>
-                                <li>1. Maricel</li>
-                                <li>2. Mark</li>
-                                <li>3. Daryl</li>
-                                <li>4. Franco</li>
-                                <li>5. Mark</li>
-                            </ul>
+						<!--display scores here-->
                         </div>
                     </div>
                 </div><!--End Wrapper-->
+                
+                
 </body>
 </html>

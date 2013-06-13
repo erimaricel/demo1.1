@@ -9,20 +9,34 @@
 <script type="text/javascript" src="js/jquery-ui.js"></script> 
 <script type="text/javascript" src="js/layout.js"></script>
 <script type="text/javascript" src="js/play_normal.js"></script>
-<script type="text/javascript" src="phonegap.js"></script>
+<script type="text/javascript" src="js/phonegap.js"></script> 
 
 </head>
 
 <body onload="init()">
     <div id="score-wrapper">
         <span id="score-count">0</span>
+        <div id="end-menu">
+            <ul>
+                <li id="btn-playagain" class="button"> 
+                    <a href="play_normal.html"><div class="generic_linker"></div></a>
+                </li>
+                <li id="btn-mainmenu" class="button"> 
+                    <a href="index.html#mainmenu"><div class="generic_linker"></div></a>
+                </li>
+            </ul>
+        </div>
     </div>
     <header>
         <p>Beta version</p>
     </header>
     <section>
          <div id="wrapper">
-            <a href="index.html#mainmenu" rel="external"><div id="main-menu"></div></a>
+            <a href="index.html#mainmenu" rel="external">
+                <div id="main-menu">
+                    <img src="images/main-menu.png">
+                </div>
+            </a>
             <div id="play-status">
                 <div id="play-scoreboard">
                     <span id="score">Score:</span>
