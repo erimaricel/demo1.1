@@ -5,10 +5,14 @@
     var arr2Hard = [];
     var myintHard;
     var checkwintimerHard;
-    var imageData;
     // Wait for Cordova to connect with the device
     //
-  
+    touchRemove();
+
+    $('#playhard').live('pageshow',function(event, ui){
+      $('#containerHard').empty();
+        initHard();
+        });
   
     function initHard(){
       document.addEventListener("deviceready",onDeviceReadyHard,false);
@@ -104,6 +108,7 @@
         {
           clearInterval(myintHard);
           clearInterval(checkwintimerHard);
+          touchRemove();
           moveFileHard();
           displayWinHard();
           return true;
@@ -133,9 +138,17 @@
       document.addEventListener("touchcancel", touchHandler, true);
     }
 
+    function touchRemove()
+    {
+      document.removeEventListener("touchstart", touchHandler, true);
+      document.removeEventListener("touchmove", touchHandler, true);
+      document.removeEventListener("touchend", touchHandler, true);
+      document.removeEventListener("touchcancel", touchHandler, true);
+    }
 
-    function startHard(imageURI) {
-      imageData = imageURI;
+
+    function startHard(imageData) {
+
       touchinit();
       resetWinHard();
       $('#container').empty();
@@ -259,7 +272,7 @@ function displayWinHard()
       }
     });
   });
-  uploadScores(scoreNormal);
+  uploadScores(Math.round( scoreHard ));
 }
 
 
@@ -278,41 +291,6 @@ function resetWinHard()
   //
   $('#score-wrapperh').css('display','none');
 }
-
-function moveFileHard()
-{
-   window.resolveLocalFileSystemURI(imageData, moveOnSuccessHard, moveOnErrorHard);
-}
-
-function moveOnSuccessHard(entry)
-{
-  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
-    function(fileSys) 
-    {
-      fileSys.root.getDirectory("PuzzlePic", {create:true, exclusive: false},
-        function(directory) 
-        {
-          entry.moveTo(directory, null, moveFileSuccessHard, moveOnErrorHard);
-        }, moveOnErrorHard);
-    }, moveOnErrorHard);
-}
-
-function moveOnErrorHard(error)
-{
-  console.log("Error: "+error.code); 
-}
-
-function moveFileSuccessHard(entry)
-{
-  console.log("New Path: " + entry.fullPath);
-}
-
-
-
-
-
-
-
 // Upload Score
 
 var uploadScoreURL = "http://puzzlepic.cso.ph/rest/apis/pzlpc-apis/uploadScore";
@@ -356,3 +334,30 @@ function getHighScores(){
 		}
   });
 }
+
+ function moveFileHard()
+  {
+      window.resolveLocalFileSystemURI(imageData, moveFileSuccessHard, resOnErrorHard);
+  }
+
+  function moveFileSuccessHard(entry)
+  {
+      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+          function(fileSys)
+          {
+              fileSys.root.getDirectory("PuzzlePic", {create:true, exclusive: false},
+                    function(directory) 
+                    {
+                      entry.moveTo(directory, null, moveSuccess, resOnErrorHard);
+                    }, resOnError);
+          }, resOnErrorHard);
+  }
+
+  function moveSuccess(entry){
+      console.log("New Path: " +entry.fullPath);
+
+  }
+
+  function resOnErrorHard(error){
+    console.log("Error: " +error.code)
+  }

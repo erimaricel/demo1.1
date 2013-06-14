@@ -6,12 +6,12 @@
     <<link rel="stylesheet" rel="stylesheet" type="text/css" href="css/jquery.mobile-1.1.0-rc.1.min.css" />
     <link rel="stylesheet" type="text/css" href="css/main.css" />
     <link id="size-stylesheet" rel="stylesheet" type="text/css" href="css/narrow.css" />
-    <script type="text/javascript" charset="utf-8" src="js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/jquery.mobile-1.3.1.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script> 
 	<script type="text/javascript" charset="utf-8" src="js/play_normal.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/play_hard.js"></script>
-    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/phonegap.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/layout.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/splash.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/main.js"></script>
@@ -22,6 +22,12 @@
 
         <!-- Main Menu -->
         <div data-role="page" id="mainmenu" class="wrapper">
+        	<!--
+            <div id="splashscreen">
+                <img id="sprlogo" src="images/sprlogo.png" width="250px">
+            </div>
+			-->
+
             <div id="logo"></div>
             <div id="buttonlist" data-role="controlgroup" data-type="horizontal">
                 <ul>
@@ -32,7 +38,7 @@
                         <a href="#gallery" data-transition="slide" ><div class="generic_linker"></div></a>
                     </li>
                     <li id="btn-highscores" class="button">
-                        <a href="#highscore" data-transition="slide"><div class="generic_linker" onclick="getHighScores()"></div></a>
+                        <a href="#highscore" data-transition="slide" ><div class="generic_linker" onclick="getHighScores()"></div></a>
                     </li>
                 </ul>
             </div>
@@ -47,7 +53,7 @@
                         <a href="#playnormal"  data-transition="slide"><div class="generic_linker"></div></a>
                     </li>
                     <li id="btn-hard" class="button"> 
-                        <a href="#playhard" data-transition="slide"><div class="generic_linker"></div></a>
+                        <a href="#playhard" rel="external"><div class="generic_linker"></div></a>
                     </li>
                     <li id="btn-back" class="button">
                         <a href="#mainmenu" data-transition="slide" ><div class="generic_linker"></div></a>
@@ -58,26 +64,20 @@
 
         <!-- Play Normal -->
         <div data-role="page" id="playnormal" class="wrapper" reloadPage='true'>
-                <script>  
-                $('#playnormal').live('pageshow',function(event, ui){
-                  $('#container').empty();
-                  initNormal();
-                });
-            </script>
 			<div id="score-wrapper">
 			    <span id="score-count">0</span>
 			    <div id="end-menu">
 			        <ul>
 			            <li id="btn-playagain" class="button"> 
-			                <a href="#playnormal"  data-transition="slide"><div class="generic_linker"></div></a>
+			                <a href="#playnormal"><div class="generic_linker"></div></a>
 			            </li>
 			            <li id="btn-mainmenu" class="button"> 
-			                <a href="#mainmenu"  data-transition="slide"><div class="generic_linker"></div></a>
+			                <a href="#mainmenu"  rel="external"><div class="generic_linker"></div></a>
 			            </li>
 			        </ul>
 			    </div>
 			</div>
-          <a href="#mainmenu" data-transition="slide">
+          <a href="index.html" data-transition="slide">
                 <div id="main-menu">
                     <img src="images/main-menu.png">
                 </div>
@@ -111,28 +111,21 @@
         </div><!--End Wrapper-->
         
 
-        <!-- Play Hard -->
         <div data-role="page" id="playhard" class="wrapper" reloadPage='true'>
-                <script>  
-                $('#playhard').live('pageshow',function(event, ui){
-                  $('#containerHard').empty();
-                  initHard();
-                });
-            </script>
             <div id="score-wrapperh">
                 <span id="score-counth">0</span>
                 <div id="end-menu">
                     <ul>
                         <li id="btn-playagain" class="button"> 
-                            <a href="#playhard"  data-role="button"><div class="generic_linker"></div></a>
+                            <a href="#playhard"><div class="generic_linker"></div></a>
                         </li>
                         <li id="btn-mainmenu" class="button"> 
-                            <a href="#mainmenu"   data-role="button"><div class="generic_linker"></div></a>
+                            <a href="#mainmenu"  rel="external"><div class="generic_linker"></div></a>
                         </li>
                     </ul>
                 </div>
             </div>
-          <a href="#mainmenu" data-transition="slide">
+          <a href="index.html" data-transition="slide">
                 <div id="main-menu">
                     <img src="images/main-menu.png">
                 </div>
@@ -239,7 +232,7 @@
                             <span id="header">High Scores:</span>
                         </div>
                         <div id="inner-content">
-						<!--display scores here-->
+						<!--insert highscores here-->
                         </div>
                     </div>
                 </div><!--End Wrapper-->

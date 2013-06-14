@@ -5,11 +5,17 @@
     var arr2Normal = [];
     var myintNormal;
     var checkwintimerNormal;
-    var imageData;
     // Wait for Cordova to connect with the device
     //
+
+    touchRemove();
   
-  
+
+    $('#playnormal').live('pageshow',function(event, ui){
+    $('#container').empty();
+     initNormal();
+    });
+
     function initNormal(){
       document.addEventListener("deviceready",onDeviceReadyNormal,false);
     }
@@ -104,6 +110,7 @@
         {
           clearInterval(myintNormal);
           clearInterval(checkwintimerNormal);
+          touchRemove();
           moveFileNormal();
           displayWinNormal();
           return true;
@@ -133,10 +140,17 @@
       document.addEventListener("touchcancel", touchHandler, true);
     }
 
-
-    function startNormal(imageURI) 
+    function touchRemove()
     {
-      imageData = imageURI;
+      document.removeEventListener("touchstart", touchHandler, true);
+      document.removeEventListener("touchmove", touchHandler, true);
+      document.removeEventListener("touchend", touchHandler, true);
+      document.removeEventListener("touchcancel", touchHandler, true);
+    }
+
+
+    function startNormal(imageData) {
+
       touchinit();
       resetWinNormal();
       $('#container').empty();
@@ -249,7 +263,7 @@ function displayWinNormal()
     easing: "easein",
   }, 500, function() {
     // Animation complete.
-    $({countNum: 1}).animate({countNum: scoreNormal+1}, {
+    $({countNum: 1}).animate({countNum: scoreNormal}, {
       duration: 1000,
       step: function() {
         // What todo on every count
@@ -260,7 +274,7 @@ function displayWinNormal()
       }
     });
   });
-  uploadScores(scoreNormal);
+  uploadScores(Math.round( scoreNormal ));
 }
 
 
@@ -278,35 +292,6 @@ function resetWinNormal()
   // unhide score block
   //
   $('#score-wrapper').css('display','none');
-}
-
-
-function moveFileNormal()
-{
-   window.resolveLocalFileSystemURI(imageData, moveOnSuccessNormal, moveOnErrorNormal);
-}
-
-function moveOnSuccessNormal(entry)
-{
-  window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
-    function(fileSys) 
-    {
-      fileSys.root.getDirectory("PuzzlePic", {create:true, exclusive: false},
-        function(directory) 
-        {
-          entry.moveTo(directory, null, moveFileSuccessNormal, moveOnErrorNormal);
-        }, moveOnErrorNormal);
-    }, moveOnErrorNormal);
-}
-
-function moveOnErrorNormal(error)
-{
-  console.log("Error: "+error.code); 
-}
-
-function moveFileSuccessNormal(entry)
-{
-  console.log("New Path: " + entry.fullPath);
 }
 
 
@@ -355,3 +340,29 @@ var getHighScoresURL = "http://puzzlepic.cso.ph/rest/apis/pzlpc-apis/getHighScor
 	  });
  }
 
+  function moveFileNormal()
+  {
+      window.resolveLocalFileSystemURI(imageData, moveFileSuccessNormal, resOnErrorNormal);
+  }
+
+  function moveFileSuccessNormal(entry)
+  {
+      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+          function(fileSys)
+          {
+              fileSys.root.getDirectory("PuzzlePic", {create:true, exclusive: false},
+                    function(directory) 
+                    {
+                      entry.moveTo(directory, null, moveSuccess, resOnErrorNormal);
+                    }, resOnError);
+          }, resOnErrorNormal);
+  }
+
+  function moveSuccess(entry){
+      console.log("New Path: " +entry.fullPath);
+
+  }
+
+  function resOnErrorNormal(error){
+    console.log("Error: " +error.code)
+  }
